@@ -1,12 +1,9 @@
 package prototype.main;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.put;
-
+import static spark.Spark.*;
+import spark.Spark;
 import prototype.services.GlobalConfigService;
 import prototype.services.RestConsumeService;
-import spark.Spark;
 
 public class App 
 {
