@@ -1,1 +1,1 @@
-web: java -jar target/Prototype.jar
+web: java -jar bin/Prototype.jar
