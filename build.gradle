@@ -39,7 +39,7 @@ sourceSets.main.output.classesDir = file('bin')
 // Set Main class, output folder for jar and include dependencies
 jar {
   manifest {
-    attributes 'Main-Class': 'App'
+    attributes 'Main-Class': 'prototype.main.App'
   }
   destinationDir = file('bin')
   from {
