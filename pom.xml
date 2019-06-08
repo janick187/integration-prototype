@@ -11,6 +11,7 @@
   <url>http://maven.apache.org</url>
 
   <build>
+  <finalName>Prototype</finalName>
   <plugins>
     <plugin>
       <!-- Build an executable JAR -->
