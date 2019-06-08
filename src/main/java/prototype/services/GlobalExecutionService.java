@@ -2,7 +2,9 @@ package prototype.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
+import prototype.json.parsing.CallApiException;
 import spark.Request;
 
 /**
@@ -21,6 +23,25 @@ public class GlobalExecutionService extends HelperService {
             GlobalExecutionService.instance = new GlobalExecutionService();
         }
         return GlobalExecutionService.instance;
+    }
+    
+    public String searchPlace (Request req) throws CallApiException {
+    	
+    	// create map to store all the  parameters which are required to call the Google API
+    	HashMap<String, String> params = new HashMap<String, String>();
+    	
+    	// String formatedsearchterm = req.params("searchterm").replaceAll("\\s+","%20");
+    	// add parameters to map
+    	params.put("input", req.params("searchterm"));
+    	params.put("inputtype", "textquery");
+    	params.put("fields", "photos,formatted_address,name,rating,opening_hours,geometry");
+
+    	String apitype = "place/findplacefromtext";
+ 
+    	String answer = GlobalConfigService.getInstance().getGooglerestservice().callGoogleApi(apitype, params);
+    	
+    	
+    	return answer;
     }
     
 }

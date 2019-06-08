@@ -23,10 +23,10 @@ public class RestConsumeService extends HelperService {
 		String result ="";
 		
 		switch (method) {
-			// check if method equals "search". This means that a search request has been submitted by the user.
-			case "search": 
+			// check if method equals "searchplace". This means that a user search for a place by a search term.
+			case "searchplace": 
 				try {
-					
+					result = GlobalExecutionService.getInstance().searchPlace(request);
 				} catch (Exception e) {			
 					// inform caller about internal server error by setting the HTTP response code to 500
 					response.status(500);

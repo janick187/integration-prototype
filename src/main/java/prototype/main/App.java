@@ -26,8 +26,9 @@ public class App
 		
 		RestConsumeService restconsumeservice = GlobalConfigService.getInstance().getRestconsumeservice();
 		
-		//get("/hello", (req, res) -> restconsumeservice.consumeRestCall(req, res, "search"));
+		// search for places by search term in text format
+		get("/searchplace/:searchterm", (req, res) -> restconsumeservice.consumeRestCall(req, res, "searchplace"));
+		
 		get("/hello", (req, res) -> "Hello you nice guy!!!");
-
     }
 }
