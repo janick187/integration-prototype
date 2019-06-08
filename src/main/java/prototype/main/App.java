@@ -2,6 +2,7 @@ package prototype.main;
 
 import static spark.Spark.*;
 import spark.Spark;
+
 import prototype.services.GlobalConfigService;
 import prototype.services.RestConsumeService;
 
@@ -9,14 +10,14 @@ public class App
 {
     public static void main( String[] args )
     {
-
+    	
 		// default configuration
 		int hp = 8080;    
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
 			hp   = Integer.parseInt(processBuilder.environment().get("PORT"));      
 		}
-		Spark.port(hp);
+		port(hp);
 		
 		// setup global config service
 		GlobalConfigService.getInstance().setupMaps();
