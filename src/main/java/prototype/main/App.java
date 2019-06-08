@@ -17,7 +17,7 @@ public class App
 		if (processBuilder.environment().get("PORT") != null) {
 			hp   = Integer.parseInt(processBuilder.environment().get("PORT"));      
 		}
-		port(hp);
+		Spark.port(hp);
 		
 		// setup global config service
 		GlobalConfigService.getInstance().setupMaps();
