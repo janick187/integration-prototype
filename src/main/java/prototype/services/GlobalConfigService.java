@@ -5,6 +5,8 @@ import java.util.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request.Builder;
 import prototype.config.Config;
+import prototype.json.parsing.Candidates;
+import prototype.json.parsing.PlacesSearch;
 
 /**
  * <b>Purpose:</b> Create a global configuration object over which all other services can be accessed so that not every execution new service objects are created as this would use a lot of computer resources. Also it stores all configuration details from the config file. This Service will be initialised one time at the beginning.
@@ -59,9 +61,11 @@ public class GlobalConfigService extends HelperService {
 	public void setupMaps () {
 		// create class maps for GSON methods -> Help ID: 17, Source: apfelbaum-mockbackend
 		this.classMap = new HashMap<String,Class>();
-		
+		classMap.put("placessearcharray", PlacesSearch[].class);
+		classMap.put("placessearch", PlacesSearch.class);
+		classMap.put("candidatesarray", Candidates[].class);
+		classMap.put("candidates", Candidates.class);
 	}
-	
 	public void setupLists() {
 		
 	}

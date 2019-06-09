@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import prototype.json.parsing.CallApiException;
+import prototype.json.parsing.Candidates;
+import prototype.json.parsing.JsonParseException;
+import prototype.json.parsing.PlacesSearch;
+import prototype.json.parsing.SearchResult;
 import spark.Request;
 
 /**
@@ -25,7 +29,7 @@ public class GlobalExecutionService extends HelperService {
         return GlobalExecutionService.instance;
     }
     
-    public String searchPlace (Request req) throws CallApiException {
+    public String searchPlace (Request req) throws CallApiException, JsonParseException {
     	
     	// create map to store all the  parameters which are required to call the Google API
     	HashMap<String, String> params = new HashMap<String, String>();
@@ -38,10 +42,24 @@ public class GlobalExecutionService extends HelperService {
 
     	String apitype = "place/findplacefromtext";
  
-    	String answer = GlobalConfigService.getInstance().getGooglerestservice().callGoogleApi(apitype, params);
+    	PlacesSearch googleanswer = (PlacesSearch) this.fromJsonObject(GlobalConfigService.getInstance().getGooglerestservice().callGoogleApi(apitype, params), "placessearch");
     	
+    	Candidates[] candidates = googleanswer.getCandidates();
     	
-    	return answer;
+    	// create a stringbuilder so that multiple product object data can be returned in the same response to the user later -> Help ID: , Source: https://stackoverflow.com/questions/12899953/in-java-how-to-append-a-string-more-efficiently
+    	StringBuilder stringbuilder = new StringBuilder().append("[");
+    	
+    	// add each product which fulfils the matching criteria to the response
+    	for (Candidates cand: candidates) {
+    		SearchResult sr = new SearchResult(cand);
+    		// add search result object to the response
+    		stringbuilder.append(this.toJson(sr) + ",");
+    	}
+    			
+    	// close response content so that it is in valid format
+    	String jsonresponse = closeJsonResponse(stringbuilder);
+    	
+    	return jsonresponse;
     }
     
 }

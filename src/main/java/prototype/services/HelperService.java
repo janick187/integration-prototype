@@ -161,7 +161,7 @@ public abstract class HelperService  {
 			stringbuilder.append("]");
 		} else {
 			// create message that no results have been found
-			stringbuilder.append(toJson(new NoResultsMessage("No products available for the provided searchrequest!")));
+			stringbuilder.append(toJson(new NoResultsMessage("No results")));
 		}
 		// return a string in json format, this is either the searchresult or the no results message
 		return stringbuilder.toString();
