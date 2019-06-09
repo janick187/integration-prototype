@@ -36,6 +36,17 @@ public class RestConsumeService extends HelperService {
 					request = null;
 				}
 			break;
+			case "getplace":
+				try {
+					result = GlobalExecutionService.getInstance().getPlaceDetails(request);
+				} catch (Exception e) {			
+					// inform caller about internal server error by setting the HTTP response code to 500
+					response.status(500);
+					// return custom-friendly exception message
+					result = this.returnExceptionMessage(e);
+				} finally {
+					request = null;
+				}
 		}			
 		return result;
 	}

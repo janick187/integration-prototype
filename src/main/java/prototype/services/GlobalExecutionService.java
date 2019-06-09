@@ -7,8 +7,10 @@ import java.util.HashMap;
 import prototype.json.parsing.CallApiException;
 import prototype.json.parsing.Results;
 import prototype.json.parsing.JsonParseException;
+import prototype.json.parsing.PlaceDetailsSearchResult;
 import prototype.json.parsing.PlacesSearch;
 import prototype.json.parsing.SearchResult;
+import prototype.json.parsing.SinglePlaceResponse;
 import spark.Request;
 
 /**
@@ -44,12 +46,27 @@ public class GlobalExecutionService extends HelperService {
     	
     	Results[] results = googleanswer.getResults();
     	
+    	// list of all searchresults
+    	ArrayList<SearchResult> allsearchresults = new ArrayList<SearchResult>();
+    	
+    	// add each result to the resultlist
+    	for (Results result : results) {
+    		SearchResult sr = new SearchResult(result);
+    		allsearchresults.add(sr);
+    	}
+    	
+    	try {
+    		// sort list based on rating
+    		Collections.sort(allsearchresults);
+    	} catch (Exception e) {
+    		System.out.println("Could not sort list");
+    	}
+    	
     	// create a stringbuilder so that multiple product object data can be returned in the same response to the user later -> Help ID: , Source: https://stackoverflow.com/questions/12899953/in-java-how-to-append-a-string-more-efficiently
     	StringBuilder stringbuilder = new StringBuilder().append("[");
     	
     	// add each product which fulfils the matching criteria to the response
-    	for (Results result: results) {
-    		SearchResult sr = new SearchResult(result);
+    	for (SearchResult sr : allsearchresults) {
     		// add search result object to the response
     		stringbuilder.append(this.toJson(sr) + ",");
     	}
@@ -59,5 +76,21 @@ public class GlobalExecutionService extends HelperService {
     	
     	return jsonresponse;
     }
-    
+
+    public String getPlaceDetails (Request req) throws JsonParseException, CallApiException {
+    	
+    	// create map to store all the  parameters which are required to call the Google API
+    	HashMap<String, String> params = new HashMap<String, String>();
+    	    	
+    	// add parameters to map
+    	params.put("placeid", req.params("placeid"));
+    	params.put("fields", "formatted_address,name,rating,opening_hours,rating,formatted_phone_number,opening_hours,address_component,scope,url,price_level,user_ratings_total");
+    	String apitype = "place/details";
+ 
+    	SinglePlaceResponse googleanswer = (SinglePlaceResponse) this.fromJsonObject(GlobalConfigService.getInstance().getGooglerestservice().callGoogleApi(apitype, params), "singleplaceresponse");
+    	
+    	PlaceDetailsSearchResult pdsr = new PlaceDetailsSearchResult (googleanswer.getResult());
+    	
+    	return this.toJson(pdsr);
+    }
 }

@@ -6,6 +6,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request.Builder;
 import prototype.config.Config;
 import prototype.json.parsing.Results;
+import prototype.json.parsing.SinglePlaceResponse;
 import prototype.json.parsing.PlacesSearch;
 
 /**
@@ -65,6 +66,7 @@ public class GlobalConfigService extends HelperService {
 		classMap.put("placessearch", PlacesSearch.class);
 		classMap.put("candidatesarray", Results[].class);
 		classMap.put("candidates", Results.class);
+		classMap.put("singleplaceresponse", SinglePlaceResponse.class);
 	}
 	public void setupLists() {
 		
