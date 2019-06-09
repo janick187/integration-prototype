@@ -1,6 +1,6 @@
 package prototype.json.parsing;
 
-public class Candidates
+public class Results
 {
     private String formatted_address;
 

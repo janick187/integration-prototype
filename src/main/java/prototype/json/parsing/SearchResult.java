@@ -9,7 +9,7 @@ public class SearchResult {
 	private String rating;
 	private String open_now;
 
-	public SearchResult (Candidates cand) {
+	public SearchResult (Results cand) {
 		this.name = cand.getName();
 		this.address = cand.getFormatted_address();
 		this.lat = cand.getGeometry().getLocation().getLat();

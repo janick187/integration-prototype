@@ -5,7 +5,7 @@ import java.util.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request.Builder;
 import prototype.config.Config;
-import prototype.json.parsing.Candidates;
+import prototype.json.parsing.Results;
 import prototype.json.parsing.PlacesSearch;
 
 /**
@@ -63,8 +63,8 @@ public class GlobalConfigService extends HelperService {
 		this.classMap = new HashMap<String,Class>();
 		classMap.put("placessearcharray", PlacesSearch[].class);
 		classMap.put("placessearch", PlacesSearch.class);
-		classMap.put("candidatesarray", Candidates[].class);
-		classMap.put("candidates", Candidates.class);
+		classMap.put("candidatesarray", Results[].class);
+		classMap.put("candidates", Results.class);
 	}
 	public void setupLists() {
 		

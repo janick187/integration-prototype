@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import prototype.json.parsing.CallApiException;
-import prototype.json.parsing.Candidates;
+import prototype.json.parsing.Results;
 import prototype.json.parsing.JsonParseException;
 import prototype.json.parsing.PlacesSearch;
 import prototype.json.parsing.SearchResult;
@@ -36,22 +36,20 @@ public class GlobalExecutionService extends HelperService {
     	
     	// String formatedsearchterm = req.params("searchterm").replaceAll("\\s+","%20");
     	// add parameters to map
-    	params.put("input", req.params("searchterm"));
-    	params.put("inputtype", "textquery");
-    	params.put("fields", "photos,formatted_address,name,rating,opening_hours,geometry");
-
-    	String apitype = "place/findplacefromtext";
+    	params.put("query", req.params("searchterm"));
+    	params.put("fields", "formatted_address,name,rating,opening_hours,geometry");
+    	String apitype = "place/textsearch";
  
     	PlacesSearch googleanswer = (PlacesSearch) this.fromJsonObject(GlobalConfigService.getInstance().getGooglerestservice().callGoogleApi(apitype, params), "placessearch");
     	
-    	Candidates[] candidates = googleanswer.getCandidates();
+    	Results[] results = googleanswer.getResults();
     	
     	// create a stringbuilder so that multiple product object data can be returned in the same response to the user later -> Help ID: , Source: https://stackoverflow.com/questions/12899953/in-java-how-to-append-a-string-more-efficiently
     	StringBuilder stringbuilder = new StringBuilder().append("[");
     	
     	// add each product which fulfils the matching criteria to the response
-    	for (Candidates cand: candidates) {
-    		SearchResult sr = new SearchResult(cand);
+    	for (Results result: results) {
+    		SearchResult sr = new SearchResult(result);
     		// add search result object to the response
     		stringbuilder.append(this.toJson(sr) + ",");
     	}

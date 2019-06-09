@@ -1,18 +1,18 @@
 package prototype.json.parsing;
 public class PlacesSearch
 {
-    private Candidates[] candidates;
+    private Results[] results;
 
     private String status;
 
-    public Candidates[] getCandidates ()
+    public Results[] getResults ()
     {
-        return candidates;
+        return results;
     }
 
-    public void setCandidates (Candidates[] candidates)
+    public void setResults (Results[] results)
     {
-        this.candidates = candidates;
+        this.results = results;
     }
 
     public String getStatus ()
@@ -28,6 +28,6 @@ public class PlacesSearch
     @Override
     public String toString()
     {
-        return "ClassPojo [candidates = "+candidates+", status = "+status+"]";
+        return "ClassPojo [candidates = "+results+", status = "+status+"]";
     }
 }
