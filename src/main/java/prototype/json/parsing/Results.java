@@ -11,6 +11,8 @@ public class Results
     private String rating;
 
     private Geometry geometry;
+    
+    private String id;
 
     private Photos[] photos;
 
@@ -79,4 +81,12 @@ public class Results
     {
         return "ClassPojo [formatted_address = "+formatted_address+", name = "+name+", opening_hours = "+opening_hours+", rating = "+rating+", geometry = "+geometry+", photos = "+photos+"]";
     }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }
