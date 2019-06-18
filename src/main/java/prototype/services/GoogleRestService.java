@@ -41,7 +41,7 @@ public class GoogleRestService extends RestCallService {
 	public String callGoogleApi (String type, HashMap<String, String> params) throws CallApiException {
 		
 		
-		// create substring of URL -> Help ID: 7, Source: https://developers.google.com/maps/documentation/distance-matrix/intro
+		// create substring of URL -> Source: https://developers.google.com/maps/documentation/distance-matrix/intro
 		String url = googleapiurl + type + "/json?";
 		
 		// loop over params hashmap and add each parameter to the URL
@@ -52,7 +52,7 @@ public class GoogleRestService extends RestCallService {
 		    url = url + parameter + "&";
 		}
 		
-		// add the Google API key at the end for proper authentication -> Help ID: 7, Source: https://developers.google.com/maps/documentation/distance-matrix/intro
+		// add the Google API key at the end for proper authentication -> Source: https://developers.google.com/maps/documentation/distance-matrix/intro
 		url = url + "key=" + googleapikey;
 		
 		// send REST call to google

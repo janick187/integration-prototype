@@ -42,7 +42,7 @@ package prototype.services;
 			Request req = null;
 			
 			if (loginrequired) {
-				// build request object -> Help ID: 5, Source: https://www.stubbornjava.com/posts/okhttp-example-rest-client
+				// build request object -> Source: https://www.stubbornjava.com/posts/okhttp-example-rest-client
 				req = builder.url(url).get().header("Authorization", "Bearer " + logintoken).build();
 			} else {
 				req = builder.url(url).build();
@@ -63,7 +63,7 @@ package prototype.services;
 			
 			Request req = null;
 			
-			// build request object -> Help ID: 6, Source: https://github.com/square/okhttp/blob/master/samples/guide/src/main/java/okhttp3/guide/GetExample.java
+			// build request object -> Source: https://github.com/square/okhttp/blob/master/samples/guide/src/main/java/okhttp3/guide/GetExample.java
 			MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 			RequestBody body = RequestBody.create(JSON, json);
 			
@@ -94,7 +94,7 @@ package prototype.services;
 			
 			Request req = null;
 			
-			// build request object -> Help ID: 5, Source: https://www.stubbornjava.com/posts/okhttp-example-rest-client
+			// build request object -> Source: https://www.stubbornjava.com/posts/okhttp-example-rest-client
 			RequestBody body = RequestBody.create(JSON, json);
 			
 			if (loginrequired) {
@@ -120,7 +120,7 @@ package prototype.services;
 			
 			// execute request and save answer in responsecontent
 			try {
-				// execute call and save responce content as string -> Help ID: 5, Source: https://www.stubbornjava.com/posts/okhttp-example-rest-client
+				// execute call and save responce content as string -> Source: https://www.stubbornjava.com/posts/okhttp-example-rest-client
 				response = client.newCall(request).execute();
 				ResponseBody responseBody = response.body();
 				responsecontent = responseBody.string();

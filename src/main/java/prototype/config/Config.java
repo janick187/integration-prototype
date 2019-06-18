@@ -3,7 +3,7 @@ package prototype.config;
 import java.util.HashMap;
 import java.util.Properties;
 
-// Read variables from configuration file -> Help ID: 3, Source: https://www.opencodez.com/java/read-config-file-in-java.htm
+// Read variables from configuration file -> Source: https://www.opencodez.com/java/read-config-file-in-java.htm
 public class Config {
 	
 	private Properties configFile;

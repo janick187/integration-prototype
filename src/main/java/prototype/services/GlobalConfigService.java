@@ -32,7 +32,7 @@ public class GlobalConfigService extends HelperService {
 	private RestConsumeService restconsumeservice;
 	private GoogleRestService googlerestservice;
 	
-	// create singleton object so that it is ensured that this object only exist once -> Help ID: 16, Source: https://www.geeksforgeeks.org/singleton-class-java/
+	// create singleton object so that it is ensured that this object only exist once -> Source: https://www.geeksforgeeks.org/singleton-class-java/
 	
 	private static GlobalConfigService instance = null;
 	private GlobalConfigService() {}
@@ -60,7 +60,7 @@ public class GlobalConfigService extends HelperService {
 	 * <b>Purpose:</b> Initialise all global Maps. A map is global when it is used within multiple other classes.
 	 */
 	public void setupMaps () {
-		// create class maps for GSON methods -> Help ID: 17, Source: apfelbaum-mockbackend
+		// create class maps for GSON methods -> Source: apfelbaum-mockbackend
 		this.classMap = new HashMap<String,Class>();
 		classMap.put("placessearcharray", PlacesSearch[].class);
 		classMap.put("placessearch", PlacesSearch.class);

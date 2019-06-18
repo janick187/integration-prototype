@@ -22,7 +22,7 @@ public abstract class HelperService  {
 	public DateTime convertISOtoDate (String iso) throws DateConvertionException  {
 		DateTime datetime = null;
 		try {
-			// convert String to DateTime object -> Help ID: 9, Source: https://stackoverflow.com/questions/6252678/converting-a-date-string-to-a-datetime-object-using-joda-time-library
+			// convert String to DateTime object -> Source: https://stackoverflow.com/questions/6252678/converting-a-date-string-to-a-datetime-object-using-joda-time-library
 			org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
 			datetime = formatter.parseDateTime(iso);
 		} catch (IllegalArgumentException | UnsupportedOperationException exc) {
@@ -40,7 +40,7 @@ public abstract class HelperService  {
 	 * @return the rounded <code>integer</code> value
 	 */
 	public double roundDecimal (double value, int precision) {
-		// round number -> Help ID: 10, Source: https://stackoverflow.com/questions/22186778/using-math-round-to-round-to-one-decimal-place
+		// round number -> Source: https://stackoverflow.com/questions/22186778/using-math-round-to-round-to-one-decimal-place
 		int scale = (int) Math.pow(10, precision);
 	    return (double) Math.round(value * scale) / scale;
 	}
@@ -51,7 +51,7 @@ public abstract class HelperService  {
 	 * @return a serialized <code>string</code>
 	 */
 	public String toJson (Object obj) {
-		// convert java object to string -> Help ID: 11, Source: apfelbaum-mockbackend
+		// convert java object to string -> Source: apfelbaum-mockbackend
 		Gson gson = new Gson();
 		String json = gson.toJson(obj);
 		gson = null;
@@ -68,7 +68,7 @@ public abstract class HelperService  {
 	public Object[] fromJsonArray (String json, String type) throws JsonParseException {
 		Gson gson = new Gson();
 		try {
-			// convert multiple json objects in single json string to an array of java objects -> Help ID: 13, Source: http://zetcode.com/java/gson/
+			// convert multiple json objects in single json string to an array of java objects -> Source: http://zetcode.com/java/gson/
 			Object[] obj = (Object[]) gson.fromJson(json, GlobalConfigService.getInstance().getClassMap().get(type));
 			return obj;
 		} catch (JsonSyntaxException jse) {
@@ -90,7 +90,7 @@ public abstract class HelperService  {
 	public Object fromJsonObject(String json, String type) throws JsonParseException {
 		Gson gson = new Gson();
 		try {
-			// convert json string to java object -> Help ID: 12, Source: apfelbaum-mockbackend
+			// convert json string to java object -> Source: apfelbaum-mockbackend
 			Object obj = gson.fromJson(json, GlobalConfigService.getInstance().getClassMap().get(type));
 			return obj;
 		} catch (JsonSyntaxException jse) {

@@ -19,7 +19,7 @@ import spark.Request;
  */
 public class GlobalExecutionService extends HelperService {
 
-	// create singleton object so that it is ensured that this object only exist once -> Help ID: 16, Source: https://www.geeksforgeeks.org/singleton-class-java/
+	// create singleton object so that it is ensured that this object only exist once -> Source: https://www.geeksforgeeks.org/singleton-class-java/
 	
 	private static GlobalExecutionService instance = null;
 	private GlobalExecutionService() {}
@@ -31,17 +31,24 @@ public class GlobalExecutionService extends HelperService {
         return GlobalExecutionService.instance;
     }
     
+    /**
+     * <b>Purpose:</b> Search for places which match with the search-term received
+     * @param req the reques received
+     * @return a <code>string</code> which contains all places that have been found in the appropriate format
+     * @throws CallApiException
+     * @throws JsonParseException
+     */
     public String searchPlace (Request req) throws CallApiException, JsonParseException {
     	
     	// create map to store all the  parameters which are required to call the Google API
     	HashMap<String, String> params = new HashMap<String, String>();
     	
-    	// String formatedsearchterm = req.params("searchterm").replaceAll("\\s+","%20");
-    	// add parameters to map
+    	// add all required parameters to the map -> Source: https://developers.google.com/places/web-service/search
     	params.put("query", req.params("searchterm"));
     	params.put("fields", "formatted_address,name,rating,opening_hours,geometry");
     	String apitype = "place/textsearch";
  
+    	// get data from google by calling the google api
     	PlacesSearch googleanswer = (PlacesSearch) this.fromJsonObject(GlobalConfigService.getInstance().getGooglerestservice().callGoogleApi(apitype, params), "placessearch");
     	
     	Results[] results = googleanswer.getResults();
@@ -56,16 +63,18 @@ public class GlobalExecutionService extends HelperService {
     	}
     	
     	try {
-    		// sort list based on rating
+    		// sort list based on rating (highest rating first as most relevant)
     		Collections.sort(allsearchresults);
     	} catch (Exception e) {
+    		// print exception only as the sorting is not a must-criteria
+    		e.printStackTrace();
     		System.out.println("Could not sort list");
     	}
     	
-    	// create a stringbuilder so that multiple product object data can be returned in the same response to the user later -> Help ID: , Source: https://stackoverflow.com/questions/12899953/in-java-how-to-append-a-string-more-efficiently
+    	// create a stringbuilder so that multiple searchresult object data can be returned in the same response to the user later -> Help ID: , Source: https://stackoverflow.com/questions/12899953/in-java-how-to-append-a-string-more-efficiently
     	StringBuilder stringbuilder = new StringBuilder().append("[");
     	
-    	// add each product which fulfils the matching criteria to the response
+    	// add each searchresult to the response
     	for (SearchResult sr : allsearchresults) {
     		// add search result object to the response
     		stringbuilder.append(this.toJson(sr) + ",");
@@ -77,18 +86,27 @@ public class GlobalExecutionService extends HelperService {
     	return jsonresponse;
     }
 
+    /**
+     * <b>Purpose:</b> Get details for a single place
+     * @param req the request received
+     * @return a <code>string</code> which contains all the relevant place details
+     * @throws CallApiException
+     * @throws JsonParseException
+     */
     public String getPlaceDetails (Request req) throws JsonParseException, CallApiException {
     	
     	// create map to store all the  parameters which are required to call the Google API
     	HashMap<String, String> params = new HashMap<String, String>();
     	    	
-    	// add parameters to map
+    	// add all required parameters to the map -> Source: https://developers.google.com/places/web-service/search
     	params.put("placeid", req.params("placeid"));
     	params.put("fields", "formatted_address,name,rating,opening_hours,rating,formatted_phone_number,opening_hours,address_component,scope,url,price_level,user_ratings_total");
     	String apitype = "place/details";
  
+    	// get data from google by calling the google api
     	SinglePlaceResponse googleanswer = (SinglePlaceResponse) this.fromJsonObject(GlobalConfigService.getInstance().getGooglerestservice().callGoogleApi(apitype, params), "singleplaceresponse");
     	
+    	// create searchresult object which can be returned to the user and only contains relevant attributes
     	PlaceDetailsSearchResult pdsr = new PlaceDetailsSearchResult (googleanswer.getResult());
     	
     	return this.toJson(pdsr);
